@@ -19,6 +19,8 @@ typedef struct address {
 
 
 void print_spacer();
+void print_entry(address *entry);
+void print_unknown_command(char *input, int wait_time);
 
 
 address *create_entry(address *prev,

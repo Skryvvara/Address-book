@@ -7,6 +7,28 @@ void print_spacer()
 	printf("---------------------------------------\n");
 }
 
+void print_entry(address *entry)
+{
+	print_spacer();
+	print_spacer();
+	printf("Name	  :	 %s\n", entry->name);
+	printf("Firstname :	 %s\n", entry->firstname);
+	printf("Street	  :	 %s\n", entry->street);
+	printf("City	  :	 %s\n", entry->city);
+	printf("Zipcode	  :	 %s\n", entry->zipcode);
+	print_spacer();
+	printf("\n\n");
+	print_spacer();
+}
+
+void print_unknown_command(char *input, int wait_time)
+{
+	print_spacer();
+	printf("Unknown command | %s\n", input);
+	print_spacer();
+	Sleep(wait_time);
+}
+
 
 address *create_entry(address *prev,
 	const char *name,
@@ -39,15 +61,17 @@ void free_entryfield(char* string)
 }
 
 
-void free_entry(address *entry)
+void free_entry(struct address *entry)
 {
 	if (entry != NULL)
 	{
 		address *prev = entry->prev;
 		address *next = entry->next;
 
-		prev->next = next;
-		next->prev = prev;
+		if(prev != NULL)
+			prev->next = next;
+		if (next != NULL)
+			next->prev = prev;
 
 		free_entryfield(entry->name);
 		free_entryfield(entry->firstname);
@@ -120,13 +144,7 @@ address *edit_current_entry(address *entry)
 	{
 		system("cls");
 
-		printf("Name		:	%s\n", entry->name);
-		printf("Surname		:	%s\n", entry->firstname);
-		printf("Street		:	%s\n", entry->street);
-		printf("City		:	%s\n", entry->city);
-		printf("Zipcode		:	%s\n", entry->zipcode);
-		print_spacer();
-		printf("\n");
+		print_entry(entry);
 		printf("What would you like to edit?	\n\n");
 		printf("[Name]		: edit name.		\n");
 		printf("[Firstname]	: edit firstname.	\n");
@@ -134,7 +152,6 @@ address *edit_current_entry(address *entry)
 		printf("[City]		: edit city.		\n");
 		printf("[Zipcode]	: edit zipcode.		\n");
 		printf("[Back]		: cancel editing.	\n");
-		printf("\n");
 		print_spacer();
 		printf("\n");
 
@@ -167,10 +184,7 @@ address *edit_current_entry(address *entry)
 		}
 		else
 		{
-			print_spacer();
-			printf("Unknown command | %s\n", input);
-			print_spacer();
-			Sleep(wait_time);
+			print_unknown_command(input, wait_time);
 		}
 	}
 

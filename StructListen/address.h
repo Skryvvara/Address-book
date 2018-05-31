@@ -1,12 +1,12 @@
 #pragma once
 
 #include "stdafx.h"
-#include <cstring>
+#include <string.h>
 #include <malloc.h>
 #include <windows.h>
 
 
-struct address {
+typedef struct address {
 	char *name;
 	char *firstname;
 	char *street;
@@ -15,7 +15,7 @@ struct address {
 
 	address *prev;
 	address *next;
-};
+} address;
 
 
 void print_spacer();
